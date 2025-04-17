@@ -2,19 +2,19 @@
 <Person Type="Employee">
     <FirstName>Oscar</FirstName>
     <SecondName>Adams</SecondName>
-	<Department>Finance</Department>
-	<EmploymentDate>2024-06-01</EmploymentDate>
-	<ResignationDate></ResignationDate>
+    <Department>Finance</Department>
+    <EmploymentDate>2024-06-01</EmploymentDate>
+    <ResignationDate></ResignationDate>
     <Groups>
         <Group Location="Liverpool" Name="Budgeting_common">
             <Role>Participant</Role>
-			<From>2024-06-01</From>
-			<To>2025-02-28</To>
+            <From>2024-06-01</From>
+            <To>2025-02-28</To>
         </Group>
         <Group Location="Remote" Name="Planning_aux_revenues">
-			<Role>Head</Role>
+            <Role>Head</Role>
             <From>2024-09-15</From>
-			<To></To>
+            <To></To>
         </Group>
     </Groups>
     <Contacts>
@@ -25,7 +25,7 @@
             <Value>o_adams@my_test_company.qazqaz</Value>
         </Contact>
         <Contact Type="Facebook">
-			<Value><![CDATA[https://www.facebook.com/oscar_adams_liverpool_my_test_company/]]></Value>
+            <Value><![CDATA[https://www.facebook.com/oscar_adams_liverpool_my_test_company/]]></Value>
         </Contact>
     </Contacts>
 </Person>

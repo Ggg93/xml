@@ -2,7 +2,7 @@ package dev.gl.xml;
 
 /**
  *
- * @author glipo
+ * @author gl
  */
 public class Xml {
 
