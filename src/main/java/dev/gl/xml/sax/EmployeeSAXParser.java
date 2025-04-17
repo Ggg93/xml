@@ -22,7 +22,7 @@ public class EmployeeSAXParser {
         try {
             EmployeeSAXHandler handler = new EmployeeSAXHandler();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(xml, handler);
+            parser.parse(xml, handler); // handler functions are callbacks
 
             Employee employee = handler.getEmployee();
             System.out.println(employee.toString());
