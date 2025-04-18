@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Person Type="EMPLOYEE">
+    <FirstName>Bennett</FirstName>
+    <SecondName>Brown</SecondName>
+    <Department>IT</Department>
+    <EmploymentDate>2020-01-10</EmploymentDate>
+    <Groups>
+        <groups Location="LONDON" Name="COST_CONTROL">
+            <Role>adviser</Role>
+            <From>2022-03-01</From>
+        </groups>
+    </Groups>
+    <Contacts>
+        <Contact Type="PHONE">
+            <Value>555444333</Value>
+        </Contact>
+    </Contacts>
+</Person>

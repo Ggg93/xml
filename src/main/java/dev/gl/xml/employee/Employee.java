@@ -1,5 +1,13 @@
 package dev.gl.xml.employee;
 
+import dev.gl.xml.stax.LocalDateJAXBAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +16,35 @@ import java.util.List;
  *
  * @author gl
  */
+@XmlRootElement(name = "Person")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employee {
 
+    @XmlAttribute(name = "Type")
     private EmployeeType type;
+    
+    @XmlElement(name = "FirstName")
     private String firstName;
+    
+    @XmlElement(name = "SecondName")
     private String secondName;
+    
+    @XmlElement(name = "Department")
     private String department;
+    
+    @XmlElement(name = "EmploymentDate")
+    @XmlJavaTypeAdapter(value = LocalDateJAXBAdapter.class)
     private LocalDate employmentDate;
+    
+    @XmlElement(name = "ResignationDate")
+    @XmlJavaTypeAdapter(value = LocalDateJAXBAdapter.class)
     private LocalDate resignationDate;
+    
+    @XmlElementWrapper(name = "Groups")
     private List<Group> groups;
+    
+    @XmlElementWrapper(name = "Contacts")
+    @XmlElement(name = "Contact")
     private List<Contact> contacts;
 
     public Employee() {

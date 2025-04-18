@@ -1,17 +1,35 @@
 package dev.gl.xml.employee;
 
+import dev.gl.xml.stax.LocalDateJAXBAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 
 /**
  *
  * @author gl
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Group {
 
+    @XmlAttribute(name = "Location")
     private Location location;
+    
+    @XmlAttribute(name = "Name")
     private GroupName name;
+    
+    @XmlElement(name = "Role")
     private String role;
+    
+    @XmlElement(name = "From")
+    @XmlJavaTypeAdapter(value = LocalDateJAXBAdapter.class)
     private LocalDate from;
+    
+    @XmlElement(name = "To")
+    @XmlJavaTypeAdapter(value = LocalDateJAXBAdapter.class)
     private LocalDate to;
 
     @Override

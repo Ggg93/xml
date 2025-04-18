@@ -1,12 +1,20 @@
 package dev.gl.xml.employee;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+
 /**
  *
  * @author gl
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Contact {
 
+    @XmlAttribute(name = "Type")
     private ContactType type;
+    @XmlElement(name = "Value")
     private String value;
 
     @Override
