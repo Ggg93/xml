@@ -2,6 +2,7 @@ package dev.gl.xml.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -22,7 +23,7 @@ public class Logging {
         try {
             LogManager.getLogManager().readConfiguration(new FileInputStream(file));
             logger = Logger.getLogger(Logging.class.getCanonicalName());
-        } catch (Exception e) {
+        } catch (IOException | SecurityException e) {
             logger.severe("Something went wrong: " + e.getLocalizedMessage());
         }
         
