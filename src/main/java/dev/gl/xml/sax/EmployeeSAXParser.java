@@ -1,7 +1,9 @@
 package dev.gl.xml.sax;
 
 import dev.gl.xml.employee.Employee;
+import dev.gl.xml.utils.Logging;
 import java.io.File;
+import java.util.logging.Logger;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -12,9 +14,12 @@ import javax.xml.parsers.SAXParserFactory;
 public class EmployeeSAXParser {
 
     public static void main(String[] args) {
+        Logging.initLogger();
+        Logger logger = Logger.getLogger(EmployeeSAXParser.class.getCanonicalName());
+        
         File xml = new File(".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml");
         if (!xml.exists()) {
-            System.out.println("File is not exists!");
+            logger.severe("File is not exists!");
             return;
         }
 
@@ -25,10 +30,10 @@ public class EmployeeSAXParser {
             parser.parse(xml, handler); // handler functions are callbacks
 
             Employee employee = handler.getEmployee();
-            System.out.println(employee.toString());
+            logger.info(employee.toString());
 
         } catch (Exception e) {
-            System.out.println(e.getClass() + ": " + e.getLocalizedMessage());
+            logger.severe(e.getClass() + ": " + e.getLocalizedMessage());
         }
 
     }

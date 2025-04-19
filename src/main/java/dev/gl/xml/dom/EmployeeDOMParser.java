@@ -7,10 +7,13 @@ import dev.gl.xml.employee.EmployeeType;
 import dev.gl.xml.employee.Group;
 import dev.gl.xml.employee.GroupName;
 import dev.gl.xml.employee.Location;
+import dev.gl.xml.stax.EmployeeStAXParser;
+import dev.gl.xml.utils.Logging;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -25,9 +28,12 @@ import org.w3c.dom.NodeList;
 public class EmployeeDOMParser {
 
     public static void main(String[] args) {
+        Logging.initLogger();
+        Logger logger = Logger.getLogger(EmployeeDOMParser.class.getCanonicalName());
+        
         File file = new File(".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml");
         if (!file.exists()) {
-            System.out.println("File does not exist");
+            logger.severe("File does not exist");
             return;
         }
 
@@ -48,10 +54,10 @@ public class EmployeeDOMParser {
             }
 
             for (Employee employee : employees) {
-                System.out.println(employee.toString());
+                logger.info(employee.toString());
             }
         } catch (Exception e) {
-            System.out.println("Exception occured: "
+            logger.severe("Exception occured: "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }

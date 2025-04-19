@@ -7,10 +7,12 @@ import dev.gl.xml.employee.EmployeeType;
 import dev.gl.xml.employee.Group;
 import dev.gl.xml.employee.GroupName;
 import dev.gl.xml.employee.Location;
+import dev.gl.xml.utils.Logging;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -26,9 +28,12 @@ import javax.xml.stream.events.XMLEvent;
 public class EmployeeStAXParser {
 
     public static void main(String[] args) {
+        Logging.initLogger();
+        Logger logger = Logger.getLogger(EmployeeStAXParser.class.getCanonicalName());
+        
         File file = new File(".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml");
         if (!file.exists()) {
-            System.out.println("File does not exist");
+            logger.severe("File does not exist");
             return;
         }
 
@@ -38,12 +43,12 @@ public class EmployeeStAXParser {
             XMLEventReader reader = factory.createXMLEventReader(is);
 
             Employee employee = parseEmployee(reader);
-            System.out.println(employee.toString());
+            logger.info(employee.toString());
 
         } catch (Exception e) {
-            System.out.println("Exception occured: "
+            logger.severe("Exception occured: "
                     + e.getLocalizedMessage() + ": " + e.getLocalizedMessage());
-            e.printStackTrace(System.out);
+            e.printStackTrace(System.err);
         }
 
     }

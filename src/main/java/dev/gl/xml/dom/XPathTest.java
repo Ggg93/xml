@@ -1,6 +1,9 @@
 package dev.gl.xml.dom;
 
+import dev.gl.xml.stax.EmployeeStAXParser;
+import dev.gl.xml.utils.Logging;
 import java.io.File;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -17,10 +20,15 @@ import org.w3c.dom.NodeList;
  */
 public class XPathTest {
 
+    private static Logger logger = null;
+
     public static void main(String[] args) {
+        Logging.initLogger();
+        logger = Logger.getLogger(XPathTest.class.getCanonicalName());
+
         File file = new File(".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml");
         if (!file.exists()) {
-            System.out.println("File does not exist");
+            logger.severe("File does not exist");
             return;
         }
 
@@ -31,7 +39,7 @@ public class XPathTest {
             printAllPersonsSecondNames(xpath, doc); // get all surnames
             printAllEmails(xpath, doc); // get all emails
         } catch (Exception e) {
-            System.out.println("Exception occured: "
+            logger.severe("Exception occured: "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }
@@ -43,7 +51,7 @@ public class XPathTest {
         NodeList nodeList = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            System.out.println("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
+            logger.info("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
         }
     }
 
@@ -52,7 +60,7 @@ public class XPathTest {
         NodeList nodeList = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            System.out.println("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
+            logger.info("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
         }
     }
 }

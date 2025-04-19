@@ -9,6 +9,7 @@ import dev.gl.xml.employee.GroupName;
 import dev.gl.xml.employee.Location;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -20,6 +21,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class EmployeeSAXHandler extends DefaultHandler {
 
+    private static Logger logger = Logger.getLogger(EmployeeSAXHandler.class.getCanonicalName());
     private Employee employee;
     private Group group;
     private Contact contact;
@@ -28,12 +30,12 @@ public class EmployeeSAXHandler extends DefaultHandler {
 
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("Parsing started");
+        logger.info("Parsing started");
     }
 
     @Override
     public void endDocument() throws SAXException {
-        System.out.println("Parsing finished");
+        logger.info("Parsing finished");
     }
 
     @Override
@@ -103,12 +105,12 @@ public class EmployeeSAXHandler extends DefaultHandler {
 
     @Override
     public void warning(SAXParseException e) throws SAXException {
-        System.err.println("EmployeeSAXHandler warning: " + e.getLocalizedMessage());
+        logger.warning("EmployeeSAXHandler warning: " + e.getLocalizedMessage());
     }
 
     @Override
     public void error(SAXParseException e) throws SAXException {
-        System.err.println("EmployeeSAXHandler error: " + e.getLocalizedMessage());
+        logger.severe("EmployeeSAXHandler error: " + e.getLocalizedMessage());
     }
 
     public Employee getEmployee() {

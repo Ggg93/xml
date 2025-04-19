@@ -7,20 +7,26 @@ import dev.gl.xml.employee.EmployeeType;
 import dev.gl.xml.employee.Group;
 import dev.gl.xml.employee.GroupName;
 import dev.gl.xml.employee.Location;
+import dev.gl.xml.utils.Logging;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.logging.Logger;
 
 /**
  *
  * @author gl
  */
 public class JAXBHandler {
+    private static Logger logger = null;
 
     public static void main(String[] args) {
+        Logging.initLogger();
+        logger = Logger.getLogger(JAXBHandler.class.getCanonicalName());
+        
         Employee employee = createEmployee();
         new File(".\\src\\main\\resources\\jaxb_output").mkdirs();
         File outputFile = new File(".\\src\\main\\resources\\jaxb_output\\BennettBrown.xml");
@@ -33,7 +39,7 @@ public class JAXBHandler {
         } else {
             unmarshallingResult = "Something went wrong!";
         }
-        System.out.println(unmarshallingResult);
+        logger.info(unmarshallingResult);
     }
 
     private static Employee createEmployee() {
@@ -65,7 +71,7 @@ public class JAXBHandler {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(employee, outputFile);
         } catch (Exception e) {
-            System.out.println("Exception occured. "
+            logger.severe("Exception occured. "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }
@@ -80,7 +86,7 @@ public class JAXBHandler {
             return employee;
 
         } catch (Exception e) {
-            System.out.println("Exception occured. "
+            logger.severe("Exception occured. "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }
