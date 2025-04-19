@@ -22,9 +22,9 @@ public class OneLineFormatter extends Formatter {
         String dateTime = LocalDateTime.now().format(formatter);
         String threadNumber = String.valueOf(record.getLongThreadID());
         String level = record.getLevel().getLocalizedName();
-        String source = getSource(record);
+        String source = getSource(record); // implementation from SimpleFormatter
         String message = record.getMessage();
-        String throwable = getThrowable(record);
+        String throwable = getThrowable(record); // implementation from SimpleFormatter
 
         return new StringBuilder()
                 .append(dateTime)
