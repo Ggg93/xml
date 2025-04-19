@@ -14,12 +14,15 @@ import java.util.logging.LogRecord;
  */
 public class OneLineFormatter extends Formatter {
 
-    private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final String PATTERN = "yyyy-MM-dd HH:mm:ss XXX";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
 
     @Override
     public String format(LogRecord record) {
-        String dateTime = LocalDateTime.now().format(formatter);
+        String dateTime = LocalDateTime.now()
+                .atZone(ZoneId.systemDefault())
+                .toOffsetDateTime()
+                .format(formatter);
         String threadNumber = String.valueOf(record.getLongThreadID());
         String level = record.getLevel().getLocalizedName();
         String source = getSource(record); // implementation from SimpleFormatter
