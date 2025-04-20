@@ -27,10 +27,7 @@ public class Logging {
             logger.config("Logger has been initialized from custom configuration");
 
         } catch (IOException | SecurityException e) {
-            System.out.println("Exception occured during logger init"
-                    + ". Class: " + e.getClass()
-                    + ". Message: " + e.getLocalizedMessage());
+            throw new RuntimeException(e);
         }
-
     }
 }
