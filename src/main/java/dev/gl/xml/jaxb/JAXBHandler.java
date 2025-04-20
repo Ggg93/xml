@@ -21,11 +21,10 @@ import java.util.logging.Logger;
  * @author gl
  */
 public class JAXBHandler {
-    private static Logger logger = null;
+    
+    private static final Logger LOGGER = Logging.getLocalLogger(JAXBHandler.class);
 
     public static void main(String[] args) {
-        Logging.initLogger();
-        logger = Logger.getLogger(JAXBHandler.class.getCanonicalName());
         
         Employee employee = createEmployee();
         new File(".\\src\\main\\resources\\jaxb_output").mkdirs();
@@ -39,7 +38,7 @@ public class JAXBHandler {
         } else {
             unmarshallingResult = "Something went wrong!";
         }
-        logger.info(unmarshallingResult);
+        LOGGER.info(unmarshallingResult);
     }
 
     private static Employee createEmployee() {
@@ -71,7 +70,7 @@ public class JAXBHandler {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(employee, outputFile);
         } catch (Exception e) {
-            logger.severe("Exception occured. "
+            LOGGER.severe("Exception occured. "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }
@@ -86,7 +85,7 @@ public class JAXBHandler {
             return employee;
 
         } catch (Exception e) {
-            logger.severe("Exception occured. "
+            LOGGER.severe("Exception occured. "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }

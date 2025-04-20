@@ -28,15 +28,11 @@ import javax.xml.stream.events.XMLEvent;
  */
 public class EmployeeStAXParser {
 
+    private static final Logger LOGGER = Logging.getLocalLogger(EmployeeStAXParser.class);
+
     public static void main(String[] args) {
-        Logging.initLogger();
-        Logger logger = Logger.getLogger(EmployeeStAXParser.class.getCanonicalName());
         
-        File file = new File(ExamplesStorage.EMPLOYEE_XML_PATH);
-        if (!file.exists()) {
-            logger.severe("File does not exist");
-            return;
-        }
+        File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
 
         try {
             InputStream is = new FileInputStream(file);
@@ -44,10 +40,10 @@ public class EmployeeStAXParser {
             XMLEventReader reader = factory.createXMLEventReader(is);
 
             Employee employee = parseEmployee(reader);
-            logger.info(employee.toString());
+            LOGGER.info(employee.toString());
 
         } catch (Exception e) {
-            logger.severe("Exception occured: "
+            LOGGER.severe("Exception occured: "
                     + e.getLocalizedMessage() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.err);
         }

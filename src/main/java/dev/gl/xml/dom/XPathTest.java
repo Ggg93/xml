@@ -20,17 +20,11 @@ import org.w3c.dom.NodeList;
  */
 public class XPathTest {
 
-    private static Logger logger = null;
+    private static final Logger LOGGER = Logging.getLocalLogger(XPathTest.class);
 
     public static void main(String[] args) {
-        Logging.initLogger();
-        logger = Logger.getLogger(XPathTest.class.getCanonicalName());
-
-        File file = new File(ExamplesStorage.EMPLOYEE_XML_PATH);
-        if (!file.exists()) {
-            logger.severe("File does not exist");
-            return;
-        }
+        
+        File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
 
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -39,7 +33,7 @@ public class XPathTest {
             printAllPersonsSecondNames(xpath, doc); // get all surnames
             printAllEmails(xpath, doc); // get all emails
         } catch (Exception e) {
-            logger.severe("Exception occured: "
+            LOGGER.severe("Exception occured: "
                     + e.getClass() + ": " + e.getLocalizedMessage());
             e.printStackTrace(System.out);
         }
@@ -51,7 +45,7 @@ public class XPathTest {
         NodeList nodeList = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            logger.info("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
+            LOGGER.info("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
         }
     }
 
@@ -60,7 +54,7 @@ public class XPathTest {
         NodeList nodeList = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
-            logger.info("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
+            LOGGER.info("NodeName = " + node.getNodeName() + ", value = " + node.getTextContent());
         }
     }
 }

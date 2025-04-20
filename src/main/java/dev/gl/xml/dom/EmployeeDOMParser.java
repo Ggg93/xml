@@ -27,22 +27,28 @@ import org.w3c.dom.NodeList;
  */
 public class EmployeeDOMParser {
 
-    public static void main(String[] args) {
-        Logging.initLogger();
-        Logger logger = Logger.getLogger(EmployeeDOMParser.class.getCanonicalName());
-        
-        File file = new File(ExamplesStorage.EMPLOYEE_XML_PATH);
-        if (!file.exists()) {
-            logger.severe("File does not exist");
-            return;
-        }
+    private static final Logger LOGGER = Logging.getLocalLogger(EmployeeDOMParser.class);
+    private final File file;
+    private final List<Employee> employees;
 
+    public EmployeeDOMParser(File file) {
+        employees = new ArrayList<>();
+        this.file = file;
+    }
+
+    public static void main(String[] args) {
+
+        File inputXml = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
+
+        EmployeeDOMParser instance = new EmployeeDOMParser(inputXml);
+        instance.parseEmployees();
+    }
+
+    public void parseEmployees() {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = builder.parse(file);
             doc.getDocumentElement().normalize();
-
-            List<Employee> employees = new ArrayList<>();
 
             NodeList persons = doc.getElementsByTagName("Person");
             for (int i = 0; i < persons.getLength(); i++) {
@@ -54,17 +60,14 @@ public class EmployeeDOMParser {
             }
 
             for (Employee employee : employees) {
-                logger.info(employee.toString());
+                LOGGER.info(employee.toString());
             }
         } catch (Exception e) {
-            logger.severe("Exception occured: "
-                    + e.getClass() + ": " + e.getLocalizedMessage());
-            e.printStackTrace(System.out);
+            throw new RuntimeException(e);
         }
-
     }
 
-    private static void parsePerson(Node person, Employee employee) {
+    private void parsePerson(Node person, Employee employee) {
         NamedNodeMap attributes = person.getAttributes();
         Node attribute = attributes.getNamedItem("Type");
         if (attribute != null) {
@@ -108,7 +111,7 @@ public class EmployeeDOMParser {
         }
     }
 
-    private static void parseGroupsContainer(Node groupsContainer, Employee employee) {
+    private void parseGroupsContainer(Node groupsContainer, Employee employee) {
         NodeList groups = groupsContainer.getChildNodes();
         for (int i = 0; i < groups.getLength(); i++) {
             Node groupNode = groups.item(i);
@@ -132,7 +135,7 @@ public class EmployeeDOMParser {
         }
     }
 
-    private static void parseGroup(Group group, Node groupNode) {
+    private void parseGroup(Group group, Node groupNode) {
         NodeList groupElements = groupNode.getChildNodes();
         for (int i = 0; i < groupElements.getLength(); i++) {
             Node elementOfGroup = groupElements.item(i);
@@ -159,7 +162,7 @@ public class EmployeeDOMParser {
         }
     }
 
-    private static void parseContactsContainer(Node contactsContainer, Employee employee) {
+    private void parseContactsContainer(Node contactsContainer, Employee employee) {
         NodeList contacts = contactsContainer.getChildNodes();
 
         for (int i = 0; i < contacts.getLength(); i++) {
@@ -180,7 +183,7 @@ public class EmployeeDOMParser {
         }
     }
 
-    private static void parseContact(Contact contact, Node contactNode) {
+    private void parseContact(Contact contact, Node contactNode) {
         NodeList contactNodeElements = contactNode.getChildNodes();
         for (int i = 0; i < contactNodeElements.getLength(); i++) {
             Node contactElement = contactNodeElements.item(i);
@@ -190,4 +193,9 @@ public class EmployeeDOMParser {
             }
         }
     }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
 }

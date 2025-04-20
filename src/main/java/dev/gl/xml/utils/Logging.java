@@ -12,7 +12,22 @@ import java.util.logging.Logger;
  */
 public class Logging {
 
-    public static void initLogger() {
+    public static Logger logger;
+
+    public static Logger getLocalLogger(Class clazz) {
+
+        // firstly check that we have already read JUL configuration
+        if (logger == null) {
+            initLogger();
+        }
+        return Logger.getLogger(clazz.getCanonicalName());
+    }
+
+    
+    /**
+     * reading JUL properties from logging.properties if exists
+     */
+    private static void initLogger() {
 
         File file = new File(".\\logging.properties");
         if (!file.exists()) {
@@ -30,4 +45,5 @@ public class Logging {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -14,15 +14,11 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class EmployeeSAXParser {
 
+    private static final Logger LOGGER = Logging.getLocalLogger(EmployeeSAXParser.class);
+
     public static void main(String[] args) {
-        Logging.initLogger();
-        Logger logger = Logger.getLogger(EmployeeSAXParser.class.getCanonicalName());
         
-        File file = new File(ExamplesStorage.EMPLOYEE_XML_PATH);
-        if (!file.exists()) {
-            logger.severe("File is not exists!");
-            return;
-        }
+        File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
 
         SAXParserFactory factory = SAXParserFactory.newDefaultInstance();
         try {
@@ -31,10 +27,10 @@ public class EmployeeSAXParser {
             parser.parse(file, handler); // handler functions are callbacks
 
             Employee employee = handler.getEmployee();
-            logger.info(employee.toString());
+            LOGGER.info(employee.toString());
 
         } catch (Exception e) {
-            logger.severe(e.getClass() + ": " + e.getLocalizedMessage());
+            LOGGER.severe(e.getClass() + ": " + e.getLocalizedMessage());
         }
 
     }
