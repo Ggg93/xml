@@ -1,6 +1,7 @@
 package dev.gl.xml.sax;
 
 import dev.gl.xml.employee.Employee;
+import dev.gl.xml.utils.ExamplesStorage;
 import dev.gl.xml.utils.Logging;
 import java.io.File;
 import java.util.logging.Logger;
@@ -17,8 +18,8 @@ public class EmployeeSAXParser {
         Logging.initLogger();
         Logger logger = Logger.getLogger(EmployeeSAXParser.class.getCanonicalName());
         
-        File xml = new File(".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml");
-        if (!xml.exists()) {
+        File file = new File(ExamplesStorage.EMPLOYEE_XML_PATH);
+        if (!file.exists()) {
             logger.severe("File is not exists!");
             return;
         }
@@ -27,7 +28,7 @@ public class EmployeeSAXParser {
         try {
             EmployeeSAXHandler handler = new EmployeeSAXHandler();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(xml, handler); // handler functions are callbacks
+            parser.parse(file, handler); // handler functions are callbacks
 
             Employee employee = handler.getEmployee();
             logger.info(employee.toString());

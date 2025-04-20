@@ -1,6 +1,6 @@
 package dev.gl.xml.dom;
 
-import dev.gl.xml.stax.EmployeeStAXParser;
+import dev.gl.xml.utils.ExamplesStorage;
 import dev.gl.xml.utils.Logging;
 import java.io.File;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ public class XPathTest {
         Logging.initLogger();
         logger = Logger.getLogger(XPathTest.class.getCanonicalName());
 
-        File file = new File(".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml");
+        File file = new File(ExamplesStorage.EMPLOYEE_XML_PATH);
         if (!file.exists()) {
             logger.severe("File does not exist");
             return;
