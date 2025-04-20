@@ -13,22 +13,24 @@ import java.util.logging.Logger;
 public class Logging {
 
     public static void initLogger() {
-        Logger logger = null;
 
         File file = new File(".\\logging.properties");
         if (!file.exists()) {
-            logger = Logger.getLogger(Logging.class.getCanonicalName());
+            Logger logger = Logger.getLogger(Logging.class.getCanonicalName());
+            logger.config("Logger has been initialized from default configuration");
+            return;
         }
 
         try {
             LogManager.getLogManager().readConfiguration(new FileInputStream(file));
-            logger = Logger.getLogger(Logging.class.getCanonicalName());
+            Logger logger = Logger.getLogger(Logging.class.getCanonicalName());
+            logger.config("Logger has been initialized from custom configuration");
+
         } catch (IOException | SecurityException e) {
-            logger.severe("Something went wrong: " + e.getLocalizedMessage());
+            System.out.println("Exception occured during logger init"
+                    + ". Class: " + e.getClass()
+                    + ". Message: " + e.getLocalizedMessage());
         }
-        
-        logger.config("Logger has been initialized from " 
-                + (file.exists() ? "custom" : "default") + " configuration");
 
     }
 }
