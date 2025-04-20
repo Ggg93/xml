@@ -9,10 +9,14 @@ It contains:
 JAXB contains marshalling and unmarshalling operations.
 
 Dependencies:
-JAXB: 
+
+JAXB:
+
 - API: jakarta.xml.bind-api 4.0.2
 - Implementation: org.glassfish.jaxb.jaxb-runtime 4.0.5
+
 Logging: java.util.logging based on logging.properties
+
 Tests: JUnit5
 
 Hope it helps to familiriaze yourself with JAXP/JAXB simplest operations if needed :)
