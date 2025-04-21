@@ -1,6 +1,6 @@
 package dev.gl.xml.employee;
 
-import dev.gl.xml.stax.LocalDateJAXBAdapter;
+import dev.gl.xml.jaxb.LocalDateJAXBAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;

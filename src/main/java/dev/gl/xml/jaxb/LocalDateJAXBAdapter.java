@@ -1,4 +1,4 @@
-package dev.gl.xml.stax;
+package dev.gl.xml.jaxb;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;
