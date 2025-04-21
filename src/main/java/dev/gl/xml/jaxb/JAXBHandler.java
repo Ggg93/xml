@@ -12,6 +12,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.logging.Logger;
@@ -21,27 +22,56 @@ import java.util.logging.Logger;
  * @author gl
  */
 public class JAXBHandler {
-    
-    private static final Logger LOGGER = Logging.getLocalLogger(JAXBHandler.class);
 
-    public static void main(String[] args) {
-        
-        Employee employee = createEmployee();
-        new File(".\\src\\main\\resources\\jaxb_output").mkdirs();
-        File outputFile = new File(".\\src\\main\\resources\\jaxb_output\\BennettBrown.xml");
-        marshal(employee, outputFile);
-        employee = unmarshal(outputFile);
-        
-        String unmarshallingResult;
-        if (employee != null) {
-            unmarshallingResult = employee.toString();
-        } else {
-            unmarshallingResult = "Something went wrong!";
+    private static final Logger LOGGER = Logging.getLocalLogger(JAXBHandler.class);
+    private final File source;
+    private final File destination;
+
+    public JAXBHandler(File source, File destination) {
+
+        if (source == null && destination == null) {
+            throw new IllegalArgumentException("No file exists!");
         }
-        LOGGER.info(unmarshallingResult);
+
+        if (source != null && destination == null && !source.exists()) {
+            throw new IllegalArgumentException("Source is not exist!");
+        }
+
+        if (destination != null) {
+
+            // delete file if it already exists
+            if (destination.exists()) {
+                destination.delete();
+            }
+
+            try {
+                String destinationFilePath = destination.getCanonicalPath();
+                String destinationDirectoryPath = destinationFilePath.substring(0, destinationFilePath.lastIndexOf("\\"));
+                new File(destinationDirectoryPath).mkdirs();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        this.source = source;
+        this.destination = destination;
     }
 
-    private static Employee createEmployee() {
+    public static void main(String[] args) {
+
+        File file = new File(".\\src\\main\\resources\\jaxb_output\\BennettBrown.xml");
+        JAXBHandler handler = new JAXBHandler(file, file);
+
+        Employee employee = createEmployee();
+
+        handler.marshal(employee);
+        employee = handler.unmarshal();
+
+        LOGGER.info(employee.toString());
+    }
+
+    public static Employee createEmployee() {
         Employee employee = new Employee();
         employee.setType(EmployeeType.EMPLOYEE);
         employee.setFirstName("Bennett");
@@ -63,33 +93,27 @@ public class JAXBHandler {
         return employee;
     }
 
-    private static void marshal(Employee employee, File outputFile) {
+    public void marshal(Employee employee) {
         try {
             JAXBContext context = JAXBContext.newInstance(Employee.class);
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(employee, outputFile);
+            marshaller.marshal(employee, destination);
+
         } catch (Exception e) {
-            LOGGER.severe("Exception occured. "
-                    + e.getClass() + ": " + e.getLocalizedMessage());
-            e.printStackTrace(System.out);
+            throw new RuntimeException(e);
         }
 
     }
 
-    private static Employee unmarshal(File outputFile) {
+    public Employee unmarshal() {
         try {
             JAXBContext context = JAXBContext.newInstance(Employee.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            Employee employee = (Employee) unmarshaller.unmarshal(outputFile);
-            return employee;
+            return (Employee) unmarshaller.unmarshal(source);
 
         } catch (Exception e) {
-            LOGGER.severe("Exception occured. "
-                    + e.getClass() + ": " + e.getLocalizedMessage());
-            e.printStackTrace(System.out);
+            throw new RuntimeException(e);
         }
-
-        return null;
     }
 }
