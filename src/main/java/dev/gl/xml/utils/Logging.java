@@ -31,14 +31,14 @@ public class Logging {
 
         File file = new File(".\\logging.properties");
         if (!file.exists()) {
-            Logger logger = Logger.getLogger(Logging.class.getCanonicalName());
+            logger = Logger.getLogger(Logging.class.getCanonicalName());
             logger.config("Logger has been initialized from default configuration");
             return;
         }
 
         try {
             LogManager.getLogManager().readConfiguration(new FileInputStream(file));
-            Logger logger = Logger.getLogger(Logging.class.getCanonicalName());
+            logger = Logger.getLogger(Logging.class.getCanonicalName());
             logger.config("Logger has been initialized from custom configuration");
 
         } catch (IOException | SecurityException e) {
