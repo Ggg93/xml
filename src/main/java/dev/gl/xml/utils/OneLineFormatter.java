@@ -26,7 +26,7 @@ public class OneLineFormatter extends Formatter {
         String threadNumber = String.valueOf(record.getLongThreadID());
         String level = record.getLevel().getLocalizedName();
         String source = getSource(record); // implementation from SimpleFormatter
-        String message = record.getMessage();
+        String message = checkForResourseBundleAndParameteres(record);
         String throwable = getThrowable(record); // implementation from SimpleFormatter
 
         return new StringBuilder()
@@ -57,6 +57,45 @@ public class OneLineFormatter extends Formatter {
         }
 
         return source;
+    }
+
+    /**
+     * This is Formatter.formatMessage()
+     */
+    private String checkForResourseBundleAndParameteres(LogRecord record) {
+        String format = record.getMessage();
+        java.util.ResourceBundle catalog = record.getResourceBundle();
+        if (catalog != null) {
+            try {
+                format = catalog.getString(format);
+            } catch (java.util.MissingResourceException ex) {
+                // Drop through.  Use record message as format
+            }
+        }
+        // Do the formatting.
+        try {
+            Object parameters[] = record.getParameters();
+            if (parameters == null || parameters.length == 0) {
+                // No parameters.  Just return format string.
+                return format;
+            }
+            int index = -1;
+            int fence = format.length() - 1;
+            while ((index = format.indexOf('{', index + 1)) > -1) {
+                if (index >= fence) {
+                    break;
+                }
+                char digit = format.charAt(index + 1);
+                if (digit >= '0' && digit <= '9') {
+                    return java.text.MessageFormat.format(format, parameters);
+                }
+            }
+            return format;
+
+        } catch (Exception ex) {
+            // Formatting failed: use localized format string.
+            return format;
+        }
     }
 
     private String getThrowable(LogRecord record) {
