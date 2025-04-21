@@ -9,8 +9,7 @@ import java.util.logging.Logger;
  */
 public class ExamplesStorage {
 
-    public static final String EMPLOYEE_XML_PATH
-            = ".\\src\\main\\resources\\dev\\gl\\xml\\employee\\employee.xml";
+    public static final String EMPLOYEE_XML_PATH = ".\\src\\main\\resources\\examples\\employee.xml";
 
     private static final Logger LOGGER = Logging.getLocalLogger(ExamplesStorage.class);
 
