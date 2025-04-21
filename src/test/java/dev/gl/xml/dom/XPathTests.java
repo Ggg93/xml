@@ -22,7 +22,7 @@ public class XPathTests {
 
     @BeforeAll
     static void init() {
-        File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
+        File file = ExamplesStorage.getFile(ExamplesStorage.TEST_EMPLOYEE_XML_PATH);
 
         instance = new EmployeeXPathQueries(file);
         instance.createDocumentAndXPath();

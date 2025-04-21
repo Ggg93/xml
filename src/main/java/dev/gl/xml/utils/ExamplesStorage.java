@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 public class ExamplesStorage {
 
     public static final String EMPLOYEE_XML_PATH = ".\\src\\main\\resources\\examples\\employee.xml";
+    public static final String TEST_EMPLOYEE_XML_PATH = ".\\src\\test\\resources\\employee.xml";
 
     private static final Logger LOGGER = Logging.getLocalLogger(ExamplesStorage.class);
 

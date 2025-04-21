@@ -33,7 +33,7 @@ public class EmployeeDOMParserTests {
 
     @BeforeAll
     static void getEmployee() {
-        File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
+        File file = ExamplesStorage.getFile(ExamplesStorage.TEST_EMPLOYEE_XML_PATH);
         parser = new EmployeeDOMParser(file);
         parser.parseEmployees();
         employee = parser.getEmployees().get(0);
