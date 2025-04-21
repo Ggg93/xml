@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -72,6 +73,58 @@ public class Employee {
                 + ", contacts=" + contacts
                 + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.type);
+        hash = 17 * hash + Objects.hashCode(this.firstName);
+        hash = 17 * hash + Objects.hashCode(this.secondName);
+        hash = 17 * hash + Objects.hashCode(this.department);
+        hash = 17 * hash + Objects.hashCode(this.employmentDate);
+        hash = 17 * hash + Objects.hashCode(this.resignationDate);
+        hash = 17 * hash + Objects.hashCode(this.groups);
+        hash = 17 * hash + Objects.hashCode(this.contacts);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.secondName, other.secondName)) {
+            return false;
+        }
+        if (!Objects.equals(this.department, other.department)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        if (!Objects.equals(this.employmentDate, other.employmentDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.resignationDate, other.resignationDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.groups, other.groups)) {
+            return false;
+        }
+        return Objects.equals(this.contacts, other.contacts);
+    }
+    
+    
 
     public EmployeeType getType() {
         return type;
