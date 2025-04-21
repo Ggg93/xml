@@ -7,10 +7,13 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -46,10 +49,14 @@ public class Employee {
     @XmlElementWrapper(name = "Contacts")
     @XmlElement(name = "Contact")
     private List<Contact> contacts;
+    
+    @XmlTransient
+    private final Map<ContactType, List<Contact>> contactsByType;
 
     public Employee() {
         groups = new ArrayList<>();
         contacts = new ArrayList<>();
+        contactsByType = new HashMap<>();
     }
 
     @Override
@@ -130,4 +137,8 @@ public class Employee {
         this.contacts = contacts;
     }
 
+    public Map<ContactType, List<Contact>> getContactsByType() {
+        return contactsByType;
+    }
+    
 }

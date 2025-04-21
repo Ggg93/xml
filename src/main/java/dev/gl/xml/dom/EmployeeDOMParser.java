@@ -175,7 +175,14 @@ public class EmployeeDOMParser {
                 NamedNodeMap attributes = contactNode.getAttributes();
                 Node type = attributes.getNamedItem("Type");
                 if (type != null) {
-                    contact.setType(ContactType.valueOf(type.getTextContent().toUpperCase()));
+                    ContactType contactType = ContactType.valueOf(type.getTextContent().toUpperCase());
+                    contact.setType(contactType);
+                    
+                    // fill Map<ContactType, List<Contact>>
+                    List<Contact> contactsByType = employee.getContactsByType()
+                            .getOrDefault(contactType, new ArrayList<>());
+                    contactsByType.add(contact);
+                    employee.getContactsByType().put(contactType, contactsByType);
                 }
 
                 parseContact(contact, contactNode);
