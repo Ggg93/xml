@@ -27,8 +27,8 @@ public class EmployeeXPathQueries {
 
     private static final Logger LOGGER = Logging.getLocalLogger(EmployeeXPathQueries.class);
     private final File file;
-    public Document document;
-    public XPath xpath;
+    private Document document;
+    private XPath xpath;
 
     public EmployeeXPathQueries(File file) {
         this.file = file;
@@ -39,7 +39,7 @@ public class EmployeeXPathQueries {
         File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
 
         EmployeeXPathQueries instance = new EmployeeXPathQueries(file);
-        instance.createXPath();
+        instance.createDocumentAndXPath();
         
         // get surnames
         List<String> surnames = instance.getAllPersonsSecondNames(instance.xpath, instance.document);
@@ -52,7 +52,7 @@ public class EmployeeXPathQueries {
         LOGGER.log(Level.INFO, "emails: {0}", collectionInOneLine);
     }
 
-    public void createXPath() {
+    public void createDocumentAndXPath() {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             document = builder.parse(file);
@@ -97,4 +97,13 @@ public class EmployeeXPathQueries {
         
         return emails;
     }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public XPath getXpath() {
+        return xpath;
+    }
+    
 }
