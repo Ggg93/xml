@@ -1,22 +1,21 @@
-package dev.gl.xml.dom;
+package dev.gl.xml.sax;
 
 import dev.gl.xml.employee.Contact;
 import dev.gl.xml.employee.ContactType;
 import dev.gl.xml.employee.Employee;
-import dev.gl.xml.employee.Location;
 import dev.gl.xml.employee.Group;
 import dev.gl.xml.employee.GroupName;
+import dev.gl.xml.employee.Location;
 import dev.gl.xml.utils.ExamplesStorage;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -25,25 +24,23 @@ import org.junit.jupiter.api.TestMethodOrder;
  *
  * @author gl
  */
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EmployeeDOMParserTests {
+@TestMethodOrder(OrderAnnotation.class)
+public class EmployeeSAXParserTests {
 
-    private static EmployeeDOMParser parser;
     private static Employee employee;
+    private static EmployeeSAXParser parser;
 
     @BeforeAll
-    static void getEmployee() {
+    static void init() {
         File file = ExamplesStorage.getFile(ExamplesStorage.EMPLOYEE_XML_PATH);
-        parser = new EmployeeDOMParser(file);
-        parser.parseEmployees();
-        employee = parser.getEmployees().get(0);
+        parser = new EmployeeSAXParser(file);
     }
 
     @Test
-    @DisplayName("Check that parser returned non-empty collection")
     @Order(1)
-    void testParserCollectionEmptiness() {
-        assumeFalse(parser.getEmployees().isEmpty(), "List<Employee> should not be empty");
+    void employeeExists() {
+        employee = parser.parseEmployee();
+        assumeTrue(employee != null, "Employee should exist");
     }
 
     @Test
@@ -100,5 +97,4 @@ public class EmployeeDOMParserTests {
                 () -> assertEquals("o_adams@my_test_company.qazqaz", email.getValue()),
                 () -> assertEquals("https://www.facebook.com/oscar_adams_liverpool_my_test_company/", facebook.getValue()));
     }
-
 }

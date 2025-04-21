@@ -9,6 +9,8 @@ import dev.gl.xml.employee.GroupName;
 import dev.gl.xml.employee.Location;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -73,7 +75,17 @@ public class EmployeeSAXHandler extends DefaultHandler {
                 employee.getContacts().add(contact);
 
                 attributeValue = attributes.getValue("Type");
-                contact.setType(ContactType.valueOf(attributeValue.toUpperCase()));
+                if (attributeValue != null) {
+                    ContactType contactType = ContactType.valueOf(attributeValue.toUpperCase());
+                    contact.setType(contactType);
+
+                    // fill Map<ContactType, List<Contact>>
+                    List<Contact> contactsByType = employee.getContactsByType()
+                            .getOrDefault(contactType, new ArrayList<>());
+                    contactsByType.add(contact);
+                    employee.getContactsByType().put(contactType, contactsByType);
+                }
+
                 break;
         }
     }
