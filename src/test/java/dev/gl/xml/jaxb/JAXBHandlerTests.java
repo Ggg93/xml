@@ -47,4 +47,11 @@ public class JAXBHandlerTests {
         employee = handler.unmarshal();
         assumeTrue(employee != null, "Employee should exist");
     }
+    
+    @Test
+    @Order(4)
+    void unmarshalledEmployeeShouldBeEqualToInitialOne() {
+        Employee employeeToBeMarshalled = JAXBHandler.createEmployee();
+        assertEquals(employeeToBeMarshalled, employee);
+    }
 }
